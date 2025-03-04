@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"os/exec"
 	"strconv"
 	"strings"
 )
@@ -44,6 +45,8 @@ func main() {
 			fmt.Println("Missing command name")
 		} else if BuiltinsMap[args[1]] {
 			fmt.Printf("%s is a shell builtin\n", args[1])
+		} else if path, err := exec.LookPath(args[1]); err == nil {
+			fmt.Printf("%s is %s\n", args[1], path)
 		} else {
 			fmt.Printf("%s: not found\n", args[1])
 		}
