@@ -37,6 +37,8 @@ func main() {
 			os.Exit(0)
 		}
 		os.Exit(status_code)
+	case "echo":
+		fmt.Println(strings.Join(args[1:], " "))
 	default:
 		fmt.Println(command + ": command not found")
 	}
