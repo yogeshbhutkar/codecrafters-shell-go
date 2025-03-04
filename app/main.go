@@ -8,9 +8,6 @@ import (
 	"strings"
 )
 
-// Ensures gofmt doesn't remove the "fmt" import in stage 1 (feel free to remove this!)
-var _ = fmt.Fprint
-
 func main() {
 	fmt.Fprint(os.Stdout, "$ ")
 
@@ -37,8 +34,20 @@ func main() {
 			os.Exit(0)
 		}
 		os.Exit(status_code)
+
 	case "echo":
 		fmt.Println(strings.Join(args[1:], " "))
+
+	case "type":
+		// Verify if the command name is provided.
+		if len(args) == 1 {
+			fmt.Println("Missing command name")
+		} else if BuiltinsMap[args[1]] {
+			fmt.Printf("%s is a shell builtin\n", args[1])
+		} else {
+			fmt.Printf("%s: not found\n", args[1])
+		}
+
 	default:
 		fmt.Println(command + ": command not found")
 	}
