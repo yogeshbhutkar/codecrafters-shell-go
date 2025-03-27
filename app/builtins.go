@@ -3,6 +3,7 @@ package main
 var supported_builtins = []string{
 	"exit",
 	"echo",
+	"pwd",
 	"type",
 }
 

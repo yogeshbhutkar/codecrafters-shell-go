@@ -52,6 +52,13 @@ func main() {
 			fmt.Printf("%s: not found\n", args[1])
 		}
 
+	case "pwd":
+		if dir, err := os.Getwd(); err == nil {
+			fmt.Println(dir)
+		} else {
+			fmt.Println("Something went wrong!")
+		}
+
 	default:
 		executableProcess := false
 
