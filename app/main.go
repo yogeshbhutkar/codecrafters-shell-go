@@ -63,7 +63,13 @@ func main() {
 		if len(args) < 2 {
 			fmt.Println("Please specify target path")
 		} else {
-			err := os.Chdir(args[1])
+			var path string
+			if strings.HasPrefix(args[1], "~") {
+				path, _ = os.UserHomeDir()
+			} else {
+				path = args[1]
+			}
+			err := os.Chdir(path)
 			if err != nil {
 				fmt.Printf("cd: %s: No such file or directory\n", args[1])
 			}
