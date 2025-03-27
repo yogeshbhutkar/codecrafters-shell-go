@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"log"
 	"os"
 	"os/exec"
 	"strconv"
@@ -52,7 +53,38 @@ func main() {
 		}
 
 	default:
-		fmt.Println(command + ": command not found")
+		executableProcess := false
+
+		// Check if the first argument passed is an executable file.
+		if len(args) >= 1 {
+			paths := strings.Split(os.Getenv("PATH"), ":")
+
+			// Iterate through all the occurences of PATH and check if the program is found.
+			for i := range len(paths) {
+				fullExecutablePath := paths[i] + "/" + args[0]
+
+				// Logic to determine if the file is already present.
+				if fileInfo, err := os.Stat(fullExecutablePath); err == nil {
+					// Check if file is executable
+					if fileInfo.Mode()&0111 != 0 {
+						cmd := exec.Command(fullExecutablePath, args[1:]...)
+						cmd.Stdout = os.Stdout
+						cmd.Stderr = os.Stderr
+						cmd.Stdin = os.Stdin
+						if err := cmd.Run(); err != nil {
+							log.Fatal(err)
+						}
+
+						executableProcess = true
+						break
+					}
+				}
+			}
+		}
+
+		if !executableProcess {
+			fmt.Println(command + ": command not found")
+		}
 	}
 
 	// Create a REPL.
