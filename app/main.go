@@ -67,7 +67,7 @@ func main() {
 				if fileInfo, err := os.Stat(fullExecutablePath); err == nil {
 					// Check if file is executable
 					if fileInfo.Mode()&0111 != 0 {
-						cmd := exec.Command(fullExecutablePath, args[1:]...)
+						cmd := exec.Command(args[0], args[1:]...)
 						cmd.Stdout = os.Stdout
 						cmd.Stderr = os.Stderr
 						cmd.Stdin = os.Stdin
