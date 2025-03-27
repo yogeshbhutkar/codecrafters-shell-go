@@ -4,6 +4,7 @@ var supported_builtins = []string{
 	"exit",
 	"echo",
 	"pwd",
+	"cd",
 	"type",
 }
 

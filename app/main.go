@@ -59,6 +59,16 @@ func main() {
 			fmt.Println("Something went wrong!")
 		}
 
+	case "cd":
+		if len(args) < 2 {
+			fmt.Println("Please specify target path")
+		} else {
+			err := os.Chdir(args[1])
+			if err != nil {
+				fmt.Printf("cd: %s: No such file or directory\n", args[1])
+			}
+		}
+
 	default:
 		executableProcess := false
 
